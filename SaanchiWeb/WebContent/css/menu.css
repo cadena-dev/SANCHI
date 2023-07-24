@@ -1,0 +1,149 @@
+div.menuBar,
+div.menuBar a.menuButton,
+div.menu,
+div.menu a.menuItem {
+  font-family: "Verdana";
+  font-size: 14pt;
+  font-style: bold;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+div.menuBar {
+  /*background:#CC0033;*/
+  background: #0099FF;
+  /*border: 0px solid;
+  border-color:#eaf0f7 #eaf0f7 #a9bfd3 #eaf0f7;*/
+  padding: 9px 2px;
+  /*text-align: left;*/
+}
+
+div.menuBar a.menuButton {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: default;
+  left: 0px;
+  margin: 1px;
+  padding: 2px 6px;
+  position: relative;
+  text-decoration: none;
+  top: 0px;
+  z-index: 100;
+	-webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+  cursor: pointer;
+}
+div.menuBar a.menuButton:hover {
+  /*background:url(../images/tb-btn-sprite.gif) repeat-x 0 -42px;*/
+  color: #FFFFFF;
+  text-decoration: none;
+}
+/*div.menuBar a.menuButtonActive,
+div.menuBar a.menuButtonActive:hover {
+  background:#CC0033; 
+  border-color: #909090 #f0f0f0 #f0f0f0 #909090;
+  color :#FFFFFF;
+  left: 1px;
+  top: 1px;
+}*/
+div.menuBar a.menuButtonActive,
+div.menuBar a.menuButtonActive:hover {
+  text-decoration: none;
+  color: white;
+  left: 1px;
+  top: 1px;
+}
+div.menu {
+  background:  #0099FF; 
+  /*border: 1px solid;
+  border-color : #a3bad9 #8BB8F3 #8BB8F3 #a3bad9;*/
+  left: 0px;
+  top: 0px;
+  padding: 0px 1px 1px 0px;
+  position: absolute;
+  visibility: hidden;
+  -webkit-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.3);
+  -ms-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 11px 35px -14px rgba(0, 0, 0, 0.3);
+    -webkit-transition:max-height 500ms ease;
+    -moz-transition:max-height 500ms ease;
+    -o-transition:max-height 500ms ease;
+    transition:max-height 500ms ease;
+  z-index: 101;
+}
+div.menu a.menuItem {
+	display:block;
+	/*line-height:14px;*/
+	padding:5px 21px 5px 21px;
+	white-space: nowrap;
+	text-decoration:none;
+	color:#FFFFFF;
+	-moz-outline: 0 none;
+	outline: 0 none;
+	cursor:pointer;
+}
+div.menu a.menuItem:hover, div.menu a.menuItemHighlight {
+   	display:block;
+	text-decoration:none;
+	color: #FFFFFF;
+	-moz-outline: 0 none;
+	outline: 0 none;
+	cursor:pointer;
+  	background: #0e7d1a;	
+}
+
+div.menu a.menuItem span.menuItemText {}
+
+div.menu a.menuItem span.menuItemArrow {
+  	margin-right: -.75em;
+}
+
+div.menu div.menuItemSep {
+    border-top: 1px solid #909090;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 4px 2px;
+}
+
+.yellowlabel{
+	font-size: 11px; font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; COLOR:ffff33; 
+	border: 1px solid #34518e; background-color :ffff33;
+	margin-bottom: 1px; margin-left: 1px; margin-top: 1px; margin-right: 1px;
+	padding-left: 5px; padding-right: 5px;
+
+	}
+
+.bluevalue {
+	font-size: 11px; font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; COLOR: #0000ff; 
+	border: 1px solid #34518e; background-color :#ffffff;
+	margin-bottom: 1px; margin-left: 1px; margin-top: 1px; margin-right: 1px;
+	padding-left: 5px; padding-right: 5px;
+}
+.redvalue {
+	font-size: 11px; font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; COLOR: #ff0000; 
+	border: 1px solid #34518e; background-color :#ffffff;
+	margin-bottom: 1px; margin-left: 1px; margin-top: 1px; margin-right: 1px;
+	padding-left: 5px; padding-right: 5px;
+}
+.redlabel{
+	font-size: 11px; font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; COLOR:ff3333; 
+	background-color :ff3333;
+	}
+.greenlabel{
+	font-size: 11px; 
+	font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; 
+	color:#33cc33; 
+	border: 1px solid #34518e; 
+	background-color :#33cc33;
+	margin-bottom: 1px; margin-left: 1px; margin-top: 1px; margin-right: 1px;
+	padding-left: 5px; padding-right: 5px;
+	}
+.whitelabel{
+	font-size: 11px; font-family: Helvetica,Tahoma, Verdana, Arial,  Sans-serif; COLOR:#FFFFFF; 
+	border: 1px solid #34518e; background-color :#FFFFFF;
+	margin-bottom: 1px; margin-left: 1px; margin-top: 1px; margin-right: 1px;
+	padding-left: 5px; padding-right: 5px;
+	}
+	

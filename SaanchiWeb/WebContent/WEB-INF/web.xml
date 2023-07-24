@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="SaanchiWeb" version="3.0">
+	<display-name>SaanchiWeb</display-name>
+	
+	
+	
+	
+	
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	
+	 <filter>
+    <filter-name>SessionTimeoutFilter</filter-name>
+    <filter-class>com.saanchi.commomUtility.SessionTimeoutFilter
+		</filter-class>
+  </filter>
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>com.saanchi.commomUtility.CharacterEncodingFilter
+		</filter-class>
+  </filter>
+	
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	 <filter-mapping>
+    <filter-name>SessionTimeoutFilter</filter-name>
+    <url-pattern>/commonJsp/ErrorPage.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+	<servlet>
+    <servlet-name>SaanchiStartupServlet</servlet-name>
+    <servlet-class>com.saanchi.commomUtility.SaanchiStartupServlet</servlet-class>
+    <load-on-startup>3</load-on-startup>
+  </servlet>
+	<servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>com.saanchi.commomUtility.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/servlet/DownloadServlet</url-pattern>
+  </servlet-mapping>
+	
+	
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+		</jsp-property-group>
+	</jsp-config>
+	<welcome-file-list>
+		 <welcome-file>/commonJsp/login.jsp</welcome-file>
+	</welcome-file-list>
+	<session-config>
+		<session-timeout>20</session-timeout>
+		<cookie-config>
+			<path>/</path>
+			<http-only>true</http-only>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>openresource</web-resource-name>
+			<url-pattern>/commonJsp/ErrorPage.jsp</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>opentoall</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+</web-app>

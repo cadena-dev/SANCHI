@@ -1,0 +1,1110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation"
+		value="true" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.multipart.maxSize" value="100000000" />
+	<constant name="struts.action.excludePattern"
+		value="/servlet/DownloadServlet" />
+
+	<package name="default"
+		extends="struts-default,json-default,jasperreports-default"
+		namespace="/">
+
+		<result-types>
+			<result-type name="json"
+				class="org.apache.struts2.json.JSONResult" />
+			<result-type name="jasper"
+				class="org.apache.struts2.views.jasperreports.JasperReportsResult" />
+		</result-types>
+
+		<interceptors>
+			<interceptor
+				class="com.saanchi.commomUtility.LogInterceptor"
+				name="loginInterceptor">
+			</interceptor>
+			<interceptor name="SaanchiFilter"
+				class="com.saanchi.commomUtility.SaanchiFilter">
+				<param name="hello">Hello world</param>
+			</interceptor>
+			<interceptor-stack name="mystack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="SaanchiFilter"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="error">/commonJsp/globalErrorPage.jsp</result>
+		</global-results>
+
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+
+
+
+		<!-- login action -->
+		<action name="LoginAction"
+			class="com.saanchi.commomUtility.LoginAction" method="login">
+			<result name="success" type="redirect">homeAction</result>
+			<result name="login">/commonJsp/login.jsp</result>
+		</action>
+
+		<!-- home link action -->
+		<action name="homeAction"
+			class="com.saanchi.commomUtility.LoginAction" method="home">
+			<interceptor-ref name="mystack" />
+			<result name="login">/commonJsp/login.jsp</result>
+			<result name="success">/commonJsp/main.jsp</result>
+		</action>
+
+		<!-- logout action -->
+		<action name="logOut"
+			class="com.saanchi.commomUtility.LoginAction" method="logOut">
+			<result>/commonJsp/login.jsp</result>
+		</action>
+
+
+		<!-- START OF FILE UPLOAD -->
+		<action name="FileUpload"
+			class="com.saanchi.fileUpload.FileUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/FileUpload.jsp
+			</result>
+			<result name="input">fileUploadJsp/FileUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="uploadFile"
+			class="com.saanchi.fileUpload.FileUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/FileUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="exitFileUpload"
+			class="com.saanchi.fileUpload.FileUpload" method="exitFileUpload">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<!-- END OF FILE UPLOAD -->
+
+
+
+
+		<!-- START VALIDATE FILE SEARCH -->
+		<action name="FileValidateSearch"
+			class="com.saanchi.fileValidate.FileValidateSearch">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FileValidateSearch.jsp
+			</result>
+			<result name="input">fileValidateJsp/FileValidateSearch.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="searchFileForValidation"
+			class="com.saanchi.fileValidate.FileValidateSearch"
+			method="searchFileForValidation">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FileValidateSearch.jsp
+			</result>
+			<result name="input">fileValidateJsp/FileValidateSearch.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+
+
+		<action name="exitFileValidateSearch"
+			class="com.saanchi.fileValidate.FileValidateSearch"
+			method="exitFileValidateSearch">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END SEARCH MODULE -->
+
+
+
+
+		<!-- START FPN VALIDATION -->
+		<action name="FPNExportValidate"
+			class="com.saanchi.fileValidate.FPNExportValidate">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="saveDataToStage"
+			class="com.saanchi.fileValidate.FPNExportValidate"
+			method="saveDataToStage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="confirmToValidation"
+			class="com.saanchi.fileValidate.FPNExportValidate"
+			method="confirmToValidation">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FPNExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+		<action name="exitFPNExportValidate"
+			class="com.saanchi.fileValidate.FPNExportValidate"
+			method="exitFPNExportValidate">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END FPN VALIDATION -->
+
+
+
+
+
+
+
+
+		<!-- START PA VALIDATION -->
+		<action name="PAExportValidate"
+			class="com.saanchi.fileValidate.PAExportValidate">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="savePADataToStage"
+			class="com.saanchi.fileValidate.PAExportValidate"
+			method="savePADataToStage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="confirmPAToValidation"
+			class="com.saanchi.fileValidate.PAExportValidate"
+			method="confirmPAToValidation">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/PAExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+
+		<action name="exitPAExportValidate"
+			class="com.saanchi.fileValidate.PAExportValidate"
+			method="exitPAExportValidate">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+		<!-- END PA VALIDATION -->
+
+
+
+
+
+		<!-- START CHANGE REQUEST VALIDATION -->
+		<action name="ChangeRequestValidate"
+			class="com.saanchi.fileValidate.ChangeRequestValidate">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="saveChangeRequestDataToStage"
+			class="com.saanchi.fileValidate.ChangeRequestValidate"
+			method="saveChangeRequestDataToStage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="confirmChangeRequestToValidation"
+			class="com.saanchi.fileValidate.ChangeRequestValidate"
+			method="confirmChangeRequestToValidation">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/ChangeRequestValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+		<action name="exitChangeRequestValidate"
+			class="com.saanchi.fileValidate.ChangeRequestValidate"
+			method="exitChangeRequestValidate">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END CHANGE REQUEST VALIDATION -->
+
+
+
+
+
+		<!-- START FEE EXPORT VALIDATION -->
+		<action name="FEEExportValidate"
+			class="com.saanchi.fileValidate.FEEExportValidate">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="saveDataFeeToStage"
+			class="com.saanchi.fileValidate.FEEExportValidate"
+			method="saveChangeRequestDataToStage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="confirmFeeToValidation"
+			class="com.saanchi.fileValidate.FEEExportValidate"
+			method="confirmChangeRequestToValidation">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="input">fileValidateJsp/FEEExportValidate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+		<action name="exitFEEExportValidate"
+			class="com.saanchi.fileValidate.FEEExportValidate"
+			method="exitFEEExportValidate">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END FEE EXPORT VALIDATION -->
+
+
+
+
+		<!-- START OF PDF REPORT -->
+		<action name="InitiatePDFReportAction"
+			class="com.saanchi.report.InitiatePDFReportAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">report/PDFReportInput.jsp</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitPDFReport"
+			class="com.saanchi.report.InitiatePDFReportAction"
+			method="exitPDFReport">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="PDFReportAction"
+			class="com.saanchi.report.PDFReportAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="success">report/PDFReport.jsp</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<!-- START OF OFFICE MASTER -->
+
+		<!-- START OF OFFICE MASTER ENTRY -->
+		<action name="OfficeMasterEntry"
+			class="com.saanchi.master.OfficeMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/OfficeMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/OfficeMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitOfficeMaster"
+			class="com.saanchi.master.OfficeMasterEntry"
+			method="exitOfficeMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF OFFICE MASTER ENTRY -->
+
+
+		<!-- START OF OFFICE MASTER LIST -->
+		<action name="OfficeMasterList"
+			class="com.saanchi.master.OfficeMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/OfficeMasterList.jsp
+			</result>
+			<result name="input">masterJsp/OfficeMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<action name="deleteOfficeMaster"
+			class="com.saanchi.master.OfficeMasterList"
+			method="deleteOfficeMaster">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="office_master_id" />
+			</result>
+		</action>
+
+
+		<action name="exitOfficeMasterList"
+			class="com.saanchi.master.OfficeMasterList"
+			method="exitOfficeMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF OFFICE MASTER LIST -->
+
+
+
+		<!-- START OF OFFICE EDIT -->
+		<action name="OfficeMasterEdit"
+			class="com.saanchi.master.OfficeMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/OfficeMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/OfficeMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitOfficeMasterEdit"
+			class="com.saanchi.master.OfficeMasterEdit"
+			method="exitOfficeMasterEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF OFFICE EDIT -->
+
+		<!-- END OF OFFICE MASTER -->
+
+
+
+
+		<!-- START OF USER MASTER -->
+
+		<!-- START OF USER MASTER ENTRY -->
+		<action name="UserMasterEntry"
+			class="com.saanchi.master.UserMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/UserMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/UserMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitUserMaster"
+			class="com.saanchi.master.UserMasterEntry" method="exitUserMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF USER MASTER ENTRY -->
+
+
+		<!--START OF OFFICE MASTER LIST -->
+		<action name="UserMasterList"
+			class="com.saanchi.master.UserMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/UserMasterList.jsp
+			</result>
+			<result name="input">masterJsp/UserMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="deleteUser"
+			class="com.saanchi.master.UserMasterList" method="deleteUser">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="emp_no" />
+			</result>
+		</action>
+
+		<action name="exitUserMasterList"
+			class="com.saanchi.master.UserMasterList" method="exitUserMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!--END OF OFFICE MASTER LIST -->
+
+
+		<!--START OF OFFICE EDIT -->
+		<action name="UserMasterEdit"
+			class="com.saanchi.master.UserMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/UserMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/UserMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitUserMasterEdit"
+			class="com.saanchi.master.UserMasterEdit" method="exitUserMasterEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF OFFICE EDIT -->
+
+		<!--END OF OFFICE MASTER -->
+
+
+
+
+
+
+		<!-- START OF PROMOTER MASTER -->
+
+		<!-- START OF PROMOTER MASTER ENTRY -->
+		<action name="PromoterMasterEntry"
+			class="com.saanchi.master.PromoterMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PromoterMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/PromoterMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitPromoterMaster"
+			class="com.saanchi.master.PromoterMasterEntry"
+			method="exitPromoterMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PROMOTER MASTER ENTRY -->
+
+		<!-- START OF PROMOTER MASTER LIST -->
+		<action name="PromoterMasterList"
+			class="com.saanchi.master.PromoterMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PromoterMasterList.jsp
+			</result>
+			<result name="input">masterJsp/PromoterMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitPromoterMasterList"
+			class="com.saanchi.master.PromoterMasterList"
+			method="exitPromoterMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PROMOTER MASTER LIST -->
+
+		<!-- START OF PROMOTER EDIT -->
+		<action name="PromoterMasterEdit"
+			class="com.saanchi.master.PromoterMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PromoterMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/PromoterMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitPromoterMasterEdit"
+			class="com.saanchi.master.PromoterMasterEdit"
+			method="exitPromoterMasterEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PROMOTER EDIT -->
+
+		<!--END OF PROMOTER MASTER -->
+
+
+
+
+
+		<!-- START OF REGULATION MASTER -->
+
+		<!-- START OF REGULATION MASTER ENTRY -->
+		<action name="RegulationMasterEntry"
+			class="com.saanchi.master.RegulationMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/RegulationMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/RegulationMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitRegulationMaster"
+			class="com.saanchi.master.RegulationMasterEntry"
+			method="exitRegulationMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF REGULATION MASTER ENTRY -->
+
+		<!-- START OF REGULATION MASTER LIST -->
+		<action name="RegulationMasterList"
+			class="com.saanchi.master.RegulationMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/RegulationMasterList.jsp
+			</result>
+			<result name="input">masterJsp/RegulationMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitRegulationMasterList"
+			class="com.saanchi.master.RegulationMasterList"
+			method="exitRegulationMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF REGULATION MASTER LIST -->
+
+
+		<!-- START OF REGULATION EDIT -->
+		<action name="RegulationMasterEdit"
+			class="com.saanchi.master.RegulationMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/RegulationMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/RegulationMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitRegulationMasterEdit"
+			class="com.saanchi.master.RegulationMasterEdit"
+			method="exitRegulationMasterEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF REGULATION EDIT -->
+
+		<!--END OF REGULATION MASTER -->
+
+
+
+		<!-- START OF HOLIDAY MASTER -->
+
+		<!-- START OF HOLIDAY MASTER ENTRY -->
+		<action name="HolidayMasterEntry"
+			class="com.saanchi.master.HolidayMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/HolidayMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/HolidayMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitHolidayMaster"
+			class="com.saanchi.master.HolidayMasterEntry"
+			method="exitHolidayMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF HOLIDAY MASTER ENTRY -->
+
+
+		<!-- START OF HOLIDAY MASTER LIST -->
+		<action name="HolidayMasterList"
+			class="com.saanchi.master.HolidayMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/HolidayMasterList.jsp
+			</result>
+			<result name="input">masterJsp/HolidayMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="deleteHoliday"
+			class="com.saanchi.master.HolidayMasterList" method="deleteHoliday">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="holidaye_master_id" />
+			</result>
+		</action>
+
+		<action name="exitHolidayMasterList"
+			class="com.saanchi.master.HolidayMasterList"
+			method="exitHolidayMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF HOLIDAY MASTER LIST -->
+
+		<!-- START OF HOLIDAY EDIT -->
+		<action name="HolidayMasterEdit"
+			class="com.saanchi.master.HolidayMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/HolidayMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/HolidayMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+<action name="holidate_get" class="com.saanchi.master.HolidayMasterEdit"
+			method="holidate_get">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+			</result>
+		</action>
+		
+
+		<action name="exitHolidayEdit"
+			class="com.saanchi.master.HolidayMasterEdit" method="exitHolidayEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF HOLIDAY EDIT -->
+
+		<!--END OF HOLIDAY MASTER -->
+
+
+
+
+
+		<!-- START OF PERMIT FEE MASTER -->
+
+		<!-- START OF PERMIT FEE MASTER ENTRY -->
+		<action name="PermitFeeMasterEntry"
+			class="com.saanchi.master.PermitFeeMasterEntry">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PermitFeeMasterCreate.jsp
+			</result>
+			<result name="input">masterJsp/PermitFeeMasterCreate.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+         	<action name="workcategory_get" class="com.saanchi.master.PermitFeeMasterEntry"
+			method="workcategory_get">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="application_type" />
+			</result>
+		</action>
+         
+
+
+		<action name="exitFeePermitMaster"
+			class="com.saanchi.master.PermitFeeMasterEntry"
+			method="exitFeePermitMaster">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PERMIT FEE ENTRY -->
+
+
+		<!-- START OF PERMIT MASTER LIST -->
+		<action name="PermitFeeMasterList"
+			class="com.saanchi.master.PermitFeeMasterList">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PermitFeeMasterList.jsp
+			</result>
+			<result name="input">masterJsp/PermitFeeMasterList.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="removePermitFee"
+			class="com.saanchi.master.PermitFeeMasterList"
+			method="removePermitFee">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+			</result>
+		</action>
+
+
+		<action name="exitPermitFeeMasterList"
+			class="com.saanchi.master.PermitFeeMasterList"
+			method="exitPermitFeeMasterList">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PERMIT MASTER LIST -->
+
+
+
+		<!-- START OF PERMIT FEE EDIT -->
+		<action name="PermitFeeMasterEdit"
+			class="com.saanchi.master.PermitFeeMasterEdit">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/PermitFeeMasterEdit.jsp
+			</result>
+			<result name="input">masterJsp/PermitFeeMasterEdit.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+<action name="workcategory_editget" class="com.saanchi.master.PermitFeeMasterEdit"
+			method="workcategory_editget">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="application_type" />
+			</result>
+		</action>
+         
+
+		<action name="exitPermitFeeMasterEdit"
+			class="com.saanchi.master.PermitFeeMasterEdit"
+			method="exitPermitFeeMasterEdit">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF PERMIT FEE EDIT -->
+
+		<!--END OF PERMIT FEE MASTER -->
+
+
+
+
+		<!-- START OF CHARGING STATEMENT GENERATION -->
+
+		<!-- START OF PERMIT FEE MASTER ENTRY -->
+		<action name="ChargingStatementGeneration"
+			class="com.saanchi.master.ChargingStatementGeneration">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/ChargingStatement.jsp
+			</result>
+			<result name="input">masterJsp/ChargingStatement.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitChargingStatement"
+			class="com.saanchi.master.ChargingStatementGeneration"
+			method="exitChargingStatement">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF CHARGING STATEMENT GENERATION -->
+
+
+
+
+
+		<!-- START OF UPDATE INVOICE DETAIL -->
+		<action name="UpdateInvoiceDetail"
+			class="com.saanchi.master.UpdateInvoiceDetail">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/UpdateInvoiceDetail.jsp
+			</result>
+			<result name="input">masterJsp/UpdateInvoiceDetail.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+		<action name="loadPromoterName"
+			class="com.saanchi.master.UpdateInvoiceDetail"
+			method="loadPromoterName">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success" type="json">
+				<param name="monthCode" />
+				<param name="yearCode" />
+				<param name="office_location" />
+			</result>
+		</action>
+
+
+
+
+		<action name="exitUpdateInvoice"
+			class="com.saanchi.master.UpdateInvoiceDetail"
+			method="exitUpdateInvoice">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF UPDATE INVOICE DETAIL -->
+		
+		
+		
+		
+		
+		
+		<!-- START OF Infringements FILE UPLOAD -->
+		<action name="infringementsUpload"
+			class="com.saanchi.fileUpload.infringementsUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/InfringementsUpload.jsp
+			</result>
+			<result name="input">fileUploadJsp/InfringementsUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="uploadInfringementsFile"
+			class="com.saanchi.fileUpload.infringementsUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/InfringementsUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="exitInfringementsUpload"
+			class="com.saanchi.fileUpload.infringementsUpload" method="exitInfringementsUpload">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<!-- END OF  Infringements FILE UPLOAD -->
+		
+		
+		
+		<!-- START OF UPDATE FPN DETAIL -->
+		<action name="UpdateFPNDetail"
+			class="com.saanchi.master.UpdateFPNDetail">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/UpdateFPNDetail.jsp
+			</result>
+			<result name="input">masterJsp/UpdateFPNDetail.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+	
+
+
+
+
+		<action name="exitUpdateFPN"
+			class="com.saanchi.master.UpdateFPNDetail"
+			method="exitUpdateFPN">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF UPDATE FPN DETAIL -->
+		
+
+
+
+
+<!-- START OF KPI FILE UPLOAD -->
+		<action name="KPIFileUpload"
+			class="com.saanchi.fileUpload.KPIFileUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/KPIFileUpload.jsp
+			</result>
+			<result name="input">fileUploadJsp/KPIFileUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="uploadKPIFile"
+			class="com.saanchi.fileUpload.KPIFileUpload">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">application/xlsx</param>
+				<param name="maximumSize">100000000</param>
+			</interceptor-ref>
+			<result name="success">fileUploadJsp/KPIFileUpload.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="exitKPIFileUpload"
+			class="com.saanchi.fileUpload.KPIFileUpload" method="exitKPIFileUpload">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<!-- END OF KPI FILE UPLOAD -->
+		
+		
+		
+		<!-- START OF FPN STATEMENT GENERATION -->
+
+	
+		<action name="FPNStatementGeneration"
+			class="com.saanchi.master.FPNStatementGeneration">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/FPNStatement.jsp
+			</result>
+			<result name="input">masterJsp/FPNStatement.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+
+
+		<action name="exitFPNStatement"
+			class="com.saanchi.master.FPNStatementGeneration"
+			method="exitFPNStatement">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END OF CHARGING STATEMENT GENERATION -->
+		
+		
+		<!-- START CHANGE PASSWORD ENTRY -->
+		<action name="ChangePassword" class="com.saanchi.master.ChangePassword">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/ChangePassword.jsp
+			</result>
+			<result name="input">masterJsp/ChangePassword.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="updatePassword" class="com.saanchi.master.ChangePassword"
+			method="updatePassword">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<interceptor-ref name="mystack"></interceptor-ref>
+			<result name="success">masterJsp/ChangePassword.jsp
+			</result>
+			<result name="input">masterJsp/ChangePassword.jsp
+			</result>
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+
+		<action name="exitChangePassword" class="com.saanchi.master.ChangePassword"
+			method="exitChangePassword">
+			<result name="home">commonJsp/main.jsp</result>
+		</action>
+		<!-- END CHANGE PASSWORD ENTRY -->
+
+	</package>
+
+
+
+</struts>

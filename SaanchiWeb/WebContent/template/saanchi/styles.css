@@ -1,0 +1,25 @@
+.wwFormTable {}
+.label {text-align: left;
+	font-family:Helvetica, Tahoma, Verdana, Arial, Sans-serif;
+	font-size: 14px;
+	width: 100px;
+	padding-left: 10px;
+	color: darkblue; font-weight:bold; text-align: center;}
+.errorLabel {text-align: left;
+	font-family:Helvetica, Tahoma, Verdana, Arial, Sans-serif;
+	font-size: 14px;
+	width: 100px;
+	padding-left: 10px;
+	color: darkblue; font-weight:bold; text-align: center;}
+.errorMessage {font-weight:bold; text-align: left; color:red; }
+.smallErrorMsg {font-size: 12px;COLOR: red;font-color:red;}
+.checkboxLabel {}
+.checkboxErrorLabel {color:red; }
+.required {color:red;}
+
+.tdLabel {text-align: left;
+	font-family:Helvetica, Tahoma, Verdana, Arial, Sans-serif;
+	font-size: 14px;
+	width: 100px;
+	padding-left: 10px;
+	color: darkblue; font-weight:bold; text-align: center;} 
